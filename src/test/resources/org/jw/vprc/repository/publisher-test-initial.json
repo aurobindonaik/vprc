@@ -1,0 +1,13 @@
+{
+  "publisher": [
+    {
+      "_id": "r1",
+      "publisherId": "auro1234",
+      "firstName": "Aurobindo",
+      "surname": "Naik",
+      "phoneNumber": "07515863564",
+      "email": "aurobindonaik@testmail.com",
+      "address": "My address"
+    }
+  ]
+}

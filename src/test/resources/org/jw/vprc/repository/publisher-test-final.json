@@ -1,0 +1,22 @@
+{
+  "publisher": [
+    {
+      "_id": "r1",
+      "publisherId": "auro1234",
+      "firstName": "Aurobindo",
+      "surname": "Naik",
+      "phoneNumber": "07515863564",
+      "email": "aurobindonaik@testmail.com",
+      "address": "Aurobindo's address"
+    },
+    {
+      "_id": "r2",
+      "publisherId": "anu5678",
+      "firstName": "Annapurna",
+      "surname": "Naik",
+      "phoneNumber": "07872178624",
+      "email": "annapurnanaik@testmail.com",
+      "address": "Annapurna's address"
+    }
+  ]
+}
