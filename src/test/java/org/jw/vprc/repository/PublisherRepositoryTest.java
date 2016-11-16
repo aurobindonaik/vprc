@@ -1,49 +1,46 @@
 package org.jw.vprc.repository;
 
-import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.jw.vprc.VprcApplication;
 import org.jw.vprc.domain.Publisher;
+import org.jw.vprc.domain.ReportCard;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.jw.vprc.repository.FongoMongoTestConfig.getSpringFongoMongoDbRule;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {VprcApplication.class, FongoMongoTestConfig.class})
-public class PublisherRepositoryTest {
-    @Autowired
-    private ApplicationContext applicationContext; // nosql-unit requirement
-
-    @Rule
-    public MongoDbRule mongoDbRule = getSpringFongoMongoDbRule();
-
+public class PublisherRepositoryTest extends RepositoryBaseTest {
     @Autowired
     private PublisherRepository publisherRepository;
 
+    private List<ReportCard> reportCards;
+
+    @Before
+    public void setUp() throws Exception {
+        ReportCard reportCard1 = Mockito.mock(ReportCard.class);
+        ReportCard reportCard2 = Mockito.mock(ReportCard.class);
+        reportCards = Arrays.asList(reportCard1, reportCard2);
+    }
+
     @Test
-//    @ShouldMatchDataSet(location = "publisher-test-expected.json")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void verifySavePublisher() throws Exception {
         publisherRepository.save(createPublisher());
         assertEquals(1, publisherRepository.count());
     }
 
     @Test
-//    @UsingDataSet(locations = {"publisher-test-expected.json"}, loadStrategy = LoadStrategyEnum.CLEAN_INSERT)
     public void verifyFindByPublishedId() throws Exception {
         publisherRepository.save(createPublisher());
 
-        Publisher publisher = publisherRepository.findByPublisherId("anu1234");
+        Publisher publisher = publisherRepository.findByPublisherId("publisher1");
         assertNotNull(publisher);
-        assertEquals("Annapurna", publisher.getFirstName());
+        assertEquals("Publisher", publisher.getFirstName());
     }
 
     @Test
@@ -51,9 +48,9 @@ public class PublisherRepositoryTest {
         publisherRepository.save(createPublisher());
         publisherRepository.save(createPublisher2());
 
-        List<Publisher> publishers = publisherRepository.findByFirstName("Aurobindo");
+        List<Publisher> publishers = publisherRepository.findByFirstName("SecondPublisher");
         assertEquals(1, publishers.size());
-        assertEquals("Aurobindo", publishers.get(0).getFirstName());
+        assertEquals("SecondPublisher", publishers.get(0).getFirstName());
     }
 
     @Test
@@ -61,23 +58,23 @@ public class PublisherRepositoryTest {
         publisherRepository.save(createPublisher());
         publisherRepository.save(createPublisher2());
 
-        List<Publisher> publishers = publisherRepository.findBySurname("Naik");
+        List<Publisher> publishers = publisherRepository.findBySurname("Surname");
         assertEquals(2, publishers.size());
-        assertEquals("Annapurna", publishers.get(0).getFirstName());
-        assertEquals("Aurobindo", publishers.get(1).getFirstName());
+        assertEquals("Publisher", publishers.get(0).getFirstName());
+        assertEquals("SecondPublisher", publishers.get(1).getFirstName());
     }
 
     @Test
     public void verifyUpdatePublisher() throws Exception {
         publisherRepository.save(createPublisher());
 
-        Publisher publisher = publisherRepository.findByPublisherId("anu1234");
-        publisher.setAddress("Annapurna's new address");
+        Publisher publisher = publisherRepository.findByPublisherId("publisher1");
+        publisher.setAddress("Publisher's new address");
 
         publisherRepository.save(publisher);
 
-        Publisher updatedPublisher = publisherRepository.findByPublisherId("anu1234");
-        assertEquals("Annapurna's new address", updatedPublisher.getAddress());
+        Publisher updatedPublisher = publisherRepository.findByPublisherId("publisher1");
+        assertEquals("Publisher's new address", updatedPublisher.getAddress());
     }
 
     @Test
@@ -87,9 +84,9 @@ public class PublisherRepositoryTest {
         publisherRepository.save(createPublisher2());
 
         publisherRepository.delete(publisherToBeDeleted);
-        List<Publisher> publishers = publisherRepository.findBySurname("Naik");
+        List<Publisher> publishers = publisherRepository.findBySurname("Surname");
         assertEquals(1, publishers.size());
-        assertEquals("Aurobindo", publishers.get(0).getFirstName());
+        assertEquals("SecondPublisher", publishers.get(0).getFirstName());
     }
 
     @Test
@@ -99,36 +96,10 @@ public class PublisherRepositoryTest {
         publisherRepository.save(createPublisher2());
 
         List<Publisher> deletedPublishers = publisherRepository.deleteByPublisherId(publisherToBeDeleted.getPublisherId());
-        List<Publisher> publishers = publisherRepository.findBySurname("Naik");
+        List<Publisher> publishers = publisherRepository.findBySurname("Surname");
         assertEquals(1, publishers.size());
-        assertEquals("Aurobindo", publishers.get(0).getFirstName());
+        assertEquals("SecondPublisher", publishers.get(0).getFirstName());
 
-        assertEquals("Annapurna", deletedPublishers.get(0).getFirstName());
-    }
-
-    private Publisher createPublisher() {
-        Publisher publisher = new Publisher();
-        publisher.setId("r1");
-        publisher.setPublisherId("anu1234");
-        publisher.setFirstName("Annapurna");
-        publisher.setSurname("Naik");
-        publisher.setPhoneNumber("07872178624");
-        publisher.setEmail("annapurnanaik@testemail.com");
-        publisher.setAddress("Annapurna's address");
-
-        return publisher;
-    }
-
-    private Publisher createPublisher2() {
-        Publisher publisher = new Publisher();
-        publisher.setId("r2");
-        publisher.setPublisherId("auro5678");
-        publisher.setFirstName("Aurobindo");
-        publisher.setSurname("Naik");
-        publisher.setPhoneNumber("07515863564");
-        publisher.setEmail("aurobindonaik@testemail.com");
-        publisher.setAddress("Aurobindo's address");
-
-        return publisher;
+        assertEquals("Publisher", deletedPublishers.get(0).getFirstName());
     }
 }

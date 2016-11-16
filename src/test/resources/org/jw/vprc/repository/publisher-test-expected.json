@@ -2,12 +2,12 @@
   "publisher": [
     {
       "_id": "r1",
-      "publisherId": "anu1234",
-      "firstName": "Annapurna",
-      "surname": "Naik",
-      "phoneNumber": "07872178624",
-      "email": "annapurnanaik@testmail.com",
-      "address": "Annapurna's address"
+      "publisherId": "publisher1",
+      "firstName": "Publisher",
+      "surname": "Surname",
+      "phoneNumber": "07111111111",
+      "email": "publisher1@testmail.com",
+      "address": "Publisher's address"
     }
   ]
 }
