@@ -7,7 +7,7 @@ import org.jw.vprc.TestClock;
 import org.jw.vprc.domain.ReportCard;
 import org.jw.vprc.repository.PublisherRepository;
 import org.jw.vprc.repository.ReportCardRepository;
-import org.jw.vprc.repository.RepositoryBaseTest;
+import org.jw.vprc.repository.RepositoryTestBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class PersistenceServiceIntegrationTest extends RepositoryBaseTest {
+public class PersistenceServiceIntegrationTest extends RepositoryTestBase {
 
     private PersistenceService persistenceService;
 

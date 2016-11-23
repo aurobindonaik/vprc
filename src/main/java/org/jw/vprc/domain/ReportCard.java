@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Document(collection = "reportcard")
@@ -38,6 +37,9 @@ public class ReportCard {
 
     @Field
     private int studies;
+
+    @Field
+    private Profile profile;
 
     public ReportCard() {
     }
@@ -125,5 +127,13 @@ public class ReportCard {
 
     public void setStudies(int studies) {
         this.studies = studies;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }

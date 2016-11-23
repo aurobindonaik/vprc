@@ -5,7 +5,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
 import org.jw.vprc.TestClock;
-import org.jw.vprc.clock.Clock;
 import org.jw.vprc.domain.ReportCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ReportCardRepositoryTest extends RepositoryBaseTest{
+public class ReportCardRepositoryTest extends RepositoryTestBase {
 
     @Autowired
     private ReportCardRepository reportCardRepository;

@@ -3,6 +3,7 @@ package org.jw.vprc.repository;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import org.joda.time.DateTime;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.jw.vprc.TestClock;
 import org.jw.vprc.VprcApplication;
@@ -17,13 +18,17 @@ import static org.jw.vprc.repository.FongoMongoTestConfig.getSpringFongoMongoDbR
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {VprcApplication.class, FongoMongoTestConfig.class})
-public class RepositoryBaseTest {
+public class RepositoryTestBase {
     @Autowired
     protected ApplicationContext applicationContext;
 
     @Rule
     public MongoDbRule mongoDbRule = getSpringFongoMongoDbRule();
     protected TestClock customisedClock;
+
+    @Test
+    public void loadTextContext() throws Exception {
+    }
 
     protected Publisher createPublisher() {
         Publisher publisher = new Publisher();
