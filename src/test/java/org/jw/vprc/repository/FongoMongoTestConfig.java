@@ -47,9 +47,5 @@ public class FongoMongoTestConfig extends AbstractMongoConfiguration {
         return VPRC_TEST_MONGODB;
     }
 
-    @Override
-    protected String getMappingBasePackage() {
-        return "org.jw.vprc.repository";
-    }
 }
 
